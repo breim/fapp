@@ -12,45 +12,117 @@ angular.module('starter.controllers', [])
   // Form data for the login modal
   $scope.loginData = {};
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
+  $scope.categories = [{name: 'Aparthigh', cat: 'Aparthigh'},
+                      {name: 'Amauter'},
+                      {name: 'BBW'},
+                      {name: 'BonerMaterial'},
+                      {name: 'Bigtitssmalltits'},
+                      {name: 'bimbofetish'},
+                      {name: 'AsianHotties'},
+                      {name: 'asiangirls'},
+                      {name: 'BABES4PORN'},
+                      {name: 'Bottomless_Vixens'},
+                      {name: 'BustyPetite'},
+                      {name: 'candidfashionpolice'},
+                      {name: 'celebNSFW'},
+                      {name: 'Blondes'},
+                      {name: 'brunette'},
+                      {name: 'brunettes'},
+                      {name: 'ChristianGirls'},
+                      {name: 'classicscreenbeauties'},
+                      {name: 'curls'},
+                      {name: 'curvy'},
+                      {name: 'DarkAngels'},
+                      {name: 'diorabaird'},
+                      {name: 'DSLs'},
+                      {name: 'GarterBelts'},
+                      {name: 'Ginger'},
+                      {name: 'GirlswithGlasses'},
+                      {name: 'gonewild'},
+                      {name: 'gonewildcolor'},
+                      {name: 'gonewildplus'},
+                      {name: 'gravure'},
+                      {name: 'GroupOfNudeGirls'},
+                      {name: 'hairbra'},
+                      {name: 'hegre'},
+                      {name: 'Horny_Porn_Pics'},
+                      {name: 'hot_pics'},
+                      {name: 'hub_porn'},
+                      {name: 'indianbabe'},
+                      {name: 'iWantToFuckHer'},
+                      {name: 'jenniejune'},
+                      {name: 'jordancarver'},
+                      {name: 'just18'},
+                      {name: 'LegalTeens'},
+                      {name: 'Legsup'},
+                      {name: 'lingerie'},
+                      {name: 'MetArt'},
+                      {name: 'milf'},
+                      {name: 'NotSafeForNature'},
+                      {name: 'nsfw'},
+                      {name: 'NSFWblogs'},
+                      {name: 'nsfwoutfits'},
+                      {name: 'nude'},
+                      {name: 'OnOff'},
+                      {name: 'palegirls'},
+                      {name: 'PetitePorn'},
+                      {name: 'PhotoShopBattlesNSFW'},
+                      {name: 'Playboy'},
+                      {name: 'Porn_beauty'},
+                      {name: 'Porn_imgur'},
+                      {name: 'ravenhaired'},
+                      {name: 'RealGirls'},
+                      {name: 'redhead'},
+                      {name: 'redheads'},
+                      {name: 'seethru'},
+                      {name: 'sexyfrex'},
+                      {name: 'SexyGirlsInBoots'},
+                      {name: 'SexyGirlsInJeans'},
+                      {name: 'shewantstofuck'},
+                      {name: 'slingbikini'},
+                      {name: 'stockings'},
+                      {name: 'SuicideGirls'},
+                      {name: 'Thick'},
+                      {name: 'thinspo'},
+                      {name: 'tightdresses'},
+                      {name: 'twingirls'},
+                      {name: 'Unashamed'},
+                      {name: 'Upskirt'},
+                      {name: 'voluptuous'},
+                      {name: 'womenofcolor'},
+                      {name: 'womenofcolour'},
+                      {name: 'workgonewild'},
+                      {name: 'WtSSTaDaMiT'},
+                      {name: 'xsmallgirls'}];
 
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
 
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('PhotosCtrl', function($scope, $http, $stateParams) {
+
+    var category = $stateParams.category;
+    if (category == null || category == ''){
+      category = "nsfw";
+    }
+    $scope.category = category;
+
+    var nextPage = 0;
+    $scope.photos = [];
+
+    $scope.loadMore = function() {
+      $http.get('https://fappedia.herokuapp.com/api/v1/photos?category=' + category + '&page=' + nextPage).then(function(response) {
+        nextPage++;
+        $scope.photos = $scope.photos.concat(response.data.data);
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
+    };
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+
+
+
+.controller('PhotoCtrl', function($scope, $stateParams) {
+  $scope.hash = $stateParams.hash;
+  $scope.ext = $stateParams.ext
 });
