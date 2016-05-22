@@ -4,12 +4,12 @@
    <div class="row" ng-repeat="photo in photos" ng-if="$index % 2 === 0">
         <div class="col col-50" ng-if="$index < photos.length">
             <a href="#/app/photo/{{photos[$index].hash}}/{{photos[$index].ext}}">
-            	<img src="http://i.imgur.com/{{photos[$index].hash}}{{photos[$index].ext}}" width="100%"/>
+            	<img src="http://i.imgur.com/{{photos[$index].hash}}m{{photos[$index].ext}}" width="100%"/>
             </a>
         </div>
         <div class="col col-50" ng-if="$index + 1 < photos.length">
         	<a href="#/app/photo/{{photos[$index + 1].hash}}/{{photos[$index].ext}}">
-            	<img src="http://i.imgur.com/{{photos[$index + 1].hash}}{{photos[$index].ext}}" width="100%" />
+            	<img src="http://i.imgur.com/{{photos[$index + 1].hash}}m{{photos[$index].ext}}" width="100%" />
        		</a>
         </div>
     </div>
